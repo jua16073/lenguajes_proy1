@@ -1,17 +1,26 @@
 
-# base de evaluador de expresiones de Geeks for Geeks
-# Hecho por Rituraj Jain 
+# Python3 program to evaluate a given  
+# expression where tokens are  
+# separated by space. 
   
-OPERATORS = ['|', '*', '+', '?', '.']
-
-# Precedencia de operadores
+# Function to find precedence 
+# of operators. 
 def precedence(op): 
-    pass
+      
+    if op == '+' or op == '-': 
+        return 1
+    if op == '*' or op == '/': 
+        return 2
     return 0
   
-# realizar operaciones
-def applyOp(a, b, op):     
-    pass
+# Function to perform arithmetic 
+# operations. 
+def applyOp(a, b, op): 
+      
+    if op == '+': return a + b 
+    if op == '-': return a - b 
+    if op == '*': return a * b 
+    if op == '/': return a // b 
   
 # Function that returns value of 
 # expression after evaluation. 
@@ -106,4 +115,11 @@ def evaluate(tokens):
   
 # Driver Code 
 if __name__ == "__main__": 
-    print("Help!")
+      
+    print(evaluate("( 10 + 2 ) * 6")) 
+    print(evaluate("100 * 2 + 12")) 
+    print(evaluate("100 * ( 2 + 12 )")) 
+    print(evaluate("( 100 * ( 2 + 12 ) ) / 14")) 
+  
+# This code is contributed 
+# by Rituraj Jain 
