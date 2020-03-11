@@ -1,0 +1,8 @@
+state = nfa.State(0)
+    transition = nfa.Transition(EPSILON, 0)
+    state.transitions.append(transition)
+    i = 0
+    while i < len(symbols):
+        if symbols[i] in OPERATORS:
+            print(symbols[i])
+        i += 1
