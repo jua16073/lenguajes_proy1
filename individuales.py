@@ -1,9 +1,11 @@
 # Para automatas de funciones individuales
 import nfa
+import trees
 
 OPERATORS = ['|', '*', '+', '?', '.', ')', '(']
 
 EPSILON = "ε"
+
 
 global_counter = 0
 
@@ -17,10 +19,13 @@ def t_handler(tree, automata):
             start, finish = option(tree, automata)
         elif tree.data == "*":
             start, finish = kleene(tree, automata)
+        elif tree.data == "+":
+            start, finish = plus(tree, automata)
+        elif tree.data == "?":
+            start, finish = question(tree, automata)
     else:
         start, finish = single(tree, automata)
     return start, finish
-    pass
 
 def concatenation(tree, automata):
     symbol = tree.data
@@ -65,6 +70,7 @@ def option(tree, automata):
 
     return start, end
 
+# r* = r+ | e
 def kleene(tree, automata):
     symbol = tree.data
 
@@ -86,6 +92,40 @@ def kleene(tree, automata):
 
     return start, end
 
+# r+ = r*r
+# r+ = rr*
+def plus(tree, automata):
+    symbol = tree.data
+
+    if tree.left.data in OPERATORS:
+        st1, fn1 = t_handler(tree.left, automata)
+    else:
+        st1, fn1 = single(tree.left, automata)
+    
+    temp = trees.Tree()
+    temp.data = "*"
+    temp.left = tree.left
+
+    st2, fn2 = kleene(temp, automata)
+
+    fn1.transitions.append(nfa.Transition(EPSILON, st2.id))
+
+    return st1, fn2
+
+# r? = r | e
+def question(tree, automata):
+
+    temp = trees.Tree()
+    temp2 = trees.Tree()
+    temp2.data = EPSILON
+    temp.data = "|"
+    temp.left = tree.left
+    temp.right = temp2
+
+    st1, fn1 = option(temp, automata)
+
+    return st1, fn1
+
 
 
 # Creacion de automata de un solo simbolo
@@ -99,6 +139,3 @@ def single(tree, automata):
     first.transitions.append(nfa.Transition(symbol, second.id))
     return first, second
 
-
-def printE():
-    print(EPSILON)

@@ -92,11 +92,10 @@ def create_automata(tree, og):
     auto = nfa.Automata(og)
     trees.print2DUtil(tree, 5)
     symbols = nfa.post_order(tree)
-    m.t_handler(tree, auto)
-    for state in auto.states:
-        print(state.id)
-        for t in state.transitions:
-            print("with: ",t.symbol ," to: ", t.to)
+    start , finish = m.t_handler(tree, auto)
+    finish.accept = True
+    return auto
+    
 
 
 if __name__ == "__main__":
@@ -108,7 +107,12 @@ if __name__ == "__main__":
     #exp = "a.(a.b)+"
     #exp = "b*.a.b"
     #exp = "0.(0|1)*.0"
-    exp = "(a|b)*.a.(a|b).(a|b)"
+    exp = "(a.b)?"
     #exp = "(((a.a)|(b.b)).a).(a|b)"
     ans = evaluate(exp)
-    create_automata(ans, exp)
+    auto = create_automata(ans, exp)
+    for state in auto.states:
+        print(state.id)
+        for t in state.transitions:
+            print("with: ",t.symbol ," to: ", t.to)
+    

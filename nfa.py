@@ -15,7 +15,7 @@ class State:
         self.id = num
         self.transitions = []
         self.accept = False
-        self.transitions.append(Transition(EPSILON, self.id))
+        #self.transitions.append(Transition(EPSILON, self.id))
     pass
 
 class Transition:
