@@ -9,21 +9,29 @@ def is_in_language(automata, expresion):
     i = 0
     while True:
         temp = []
+        print("simbolo: ",expresion[i])
+        print("Estados a chequear: ",actual)
         for num in actual:
             for transition in automata.states[num].transitions:
-                if transition.symbol == expresion[i]:
+                if transition.symbol == expresion[i] and transition.to not in temp:
                     temp.append(transition.to)
         i += 1
-        actual = cerradura(automata, temp)
-        if not actual:
+        temp = cerradura(automata, temp)
+        # if not temp:
+        #     break
+        # else:
+        actual = temp.copy()
+        if i > len(expresion)-1:
             break
-    print(temp)
+    for id in actual:
+        if automata.states[id].accept:
+            return True
+    return False
     
 
 def cerradura(automata, actual):
     for num in actual:
         for transition in automata.states[num].transitions:
-            if transition.symbol == EPSILON:
+            if transition.symbol == EPSILON and transition.to not in actual:
                 actual.append(transition.to)
-    print("return actual ", actual)
     return actual

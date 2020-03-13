@@ -4,6 +4,7 @@ import individuales as m
 import evaluate as eval
 import sys
 import graph
+import dfa_set as dfa
 
 OPERATORS = ['|', '*', '+', '?', '.', ')', '(']
 UNITARY = ['*', '+', '?']
@@ -106,8 +107,8 @@ if __name__ == "__main__":
     exp = input()
     print("ingrese cadena")
     cad = input()'''
-    #exp = "a.(a.b)+"
-    exp = "b*.a.b"
+    exp = "a.(a.b)+"
+    #exp = "b*.a.b"
     #exp = "0.(0|1)*.0"
     #exp = "(a.b)|c*"
     #exp = "(0.1)*"
@@ -121,9 +122,11 @@ if __name__ == "__main__":
     #     print(state.id)
     #     for t in state.transitions:
     #         print("with: ",t.symbol ," to: ", t.to)
-    eval.is_in_language(auto, "ab")
-    print("/////////////")
     graph.graph(auto)
+    print("////////////////////////\nEvaluacion nfa")
+    print(eval.is_in_language(auto, "aab"))
+    print("////////////////////////\nA dfa")
+    dfa.to_dfa(auto, exp)
 
 
     

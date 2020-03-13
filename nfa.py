@@ -1,5 +1,4 @@
 # Generacion de NFA
-import s_auto as thompson
 import trees
 
 OPERATORS = ['|', '*', '+', '?', '.', ')', '(']
