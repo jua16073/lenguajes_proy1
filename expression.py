@@ -1,7 +1,9 @@
 import trees
 import nfa
 import individuales as m
+import evaluate as eval
 import sys
+import graph
 
 OPERATORS = ['|', '*', '+', '?', '.', ')', '(']
 UNITARY = ['*', '+', '?']
@@ -105,14 +107,23 @@ if __name__ == "__main__":
     print("ingrese cadena")
     cad = input()'''
     #exp = "a.(a.b)+"
-    #exp = "b*.a.b"
+    exp = "b*.a.b"
     #exp = "0.(0|1)*.0"
-    exp = "(a.b)?"
+    #exp = "(a.b)|c*"
+    #exp = "(0.1)*"
+    #exp = "((a|b)*)*."+EPSILON+".((a|b)|"+EPSILON+")*"
+    #exp = "((a|b)*.((a|(b.b))*."+EPSILON+"))"
     #exp = "(((a.a)|(b.b)).a).(a|b)"
+    #exp = "(b|b)*.a.b.b.(a|b)*"
     ans = evaluate(exp)
     auto = create_automata(ans, exp)
-    for state in auto.states:
-        print(state.id)
-        for t in state.transitions:
-            print("with: ",t.symbol ," to: ", t.to)
+    # for state in auto.states:
+    #     print(state.id)
+    #     for t in state.transitions:
+    #         print("with: ",t.symbol ," to: ", t.to)
+    eval.is_in_language(auto, "ab")
+    print("/////////////")
+    graph.graph(auto)
+
+
     

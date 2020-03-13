@@ -6,9 +6,6 @@ OPERATORS = ['|', '*', '+', '?', '.', ')', '(']
 
 EPSILON = "ε"
 
-
-global_counter = 0
-
 def t_handler(tree, automata):
     start = 0
     finish = 0
