@@ -32,14 +32,17 @@ def to_dfa(automata, regex):
             # los simbolos   
             c_epsilon = eval.cerradura(automata, temp)
             if check(dfa, c_epsilon) and c_epsilon != []:
-                dfa.states.append(nfa.State(c_epsilon, len(dfa.states)))
+                new_s = nfa.State(c_epsilon, len(dfa.states))
+                dfa.states.append(new_s)
+                if check_aceptacion(automata, c_epsilon):
+                    new_s.accept = True
                 state.transitions.append(nfa.Transition(symbol, dfa.states[-1].id2))
             elif c_epsilon != []:
                 selected = eval.select(dfa, c_epsilon)
                 if selected:
                     state.transitions.append(nfa.Transition(symbol, selected.id2))
                 else:
-                    print("No existe")
+                    print("No existe nodo con ", c_epsilon, " de id")
 
     return dfa
     
@@ -55,5 +58,11 @@ def check(nfa, new_state):
         if state.id == new_state:
             return False
     return True
+
+def check_aceptacion(nfa, new_state):
+    for num in new_state:
+        if nfa.states[num].accept:
+            return True
+    return False
                     
             

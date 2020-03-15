@@ -102,26 +102,29 @@ def create_automata(tree, og):
 
 
 if __name__ == "__main__":
-    '''
-    print("ingrese expression regular: \n")
-    exp = input()
-    print("ingrese cadena")
-    cad = input()'''
-    #exp = "a.(a.b)+"
-    #exp = "(a|b)+"
-    #exp = "b*.a.b"
-    #exp = "(a*|b*).c"
-    exp = "(a|"+EPSILON+").b.(a+).c?"
-    #exp = "0.(0|1)*.0"
-    #exp = "0?.(1|"+EPSILON+")?.0*"
-    #exp = "(0.0)*.(1.1)*"
-    #exp = "(a.b)|c*"
-    #exp = "(0.1)*"
-    #exp = "a|b"
-    #exp = "((a|b)*)*."+EPSILON+".((a|b)|"+EPSILON+")*"
-    #exp = "((a|b)*.((a|(b.b))*."+EPSILON+"))"
-    #exp = "(((a.a)|(b.b)).a).(a|b)"
-    #exp = "(b|b)*.a.b.b.(a|b)*"
+    print("1. ya hecha\n2. ingresar")
+    opcion = input()
+    if opcion == "2":
+        print("ingrese expression regular: \n")
+        exp = input()
+        # print("ingrese cadena")
+        # cad = input()
+    else:
+        #exp = "a.(a.b)+"
+        #exp = "(a|b)+"
+        #exp = "b*.a.b"
+        #exp = "(a*|b*).c"
+        exp = "(a|"+EPSILON+").b.(a+).c?"
+        #exp = "0.(0|1)*.0"
+        #exp = "0?.(1|"+EPSILON+")?.0*"
+        #exp = "(0.0)*.(1.1)*"
+        #exp = "(a.b)|c*"
+        #exp = "(0.1)*"
+        #exp = "a|b"
+        #exp = "((a|b)*)*."+EPSILON+".((a|b)|"+EPSILON+")*"
+        #exp = "((a|b)*.((a|(b.b))*."+EPSILON+"))"
+        #exp = "(((a.a)|(b.b)).a).(a|b)"
+        #exp = "(b|b)*.a.b.b.(a|b)*"
     ans = evaluate(exp)
     auto = create_automata(ans, exp)
     # for state in auto.states:
@@ -130,11 +133,12 @@ if __name__ == "__main__":
     #         print("with: ",t.symbol ," to: ", t.to)
     graph.graph(auto, "nfa")
     print("////////////////////////\nEvaluacion nfa")
-    print(eval.is_in_language(auto, "aab"))
+    print(eval.is_in_language(auto, "bac"))
     print("////////////////////////\nA dfa")
     auto_dfa = dfa.to_dfa(auto, exp)
     graph.graph(auto_dfa, "dfa_set")
-    print(eval.is_in_language(auto_dfa, "0011"))
+    print("////////////////////////\nEvaluacion dfa")
+    print(eval.is_in_language(auto_dfa, "bac"))
 
 
     
