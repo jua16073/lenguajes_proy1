@@ -107,11 +107,17 @@ if __name__ == "__main__":
     exp = input()
     print("ingrese cadena")
     cad = input()'''
-    exp = "a.(a.b)+"
+    #exp = "a.(a.b)+"
+    #exp = "(a|b)+"
     #exp = "b*.a.b"
+    #exp = "(a*|b*).c"
+    exp = "(a|"+EPSILON+").b.(a+).c?"
     #exp = "0.(0|1)*.0"
+    #exp = "0?.(1|"+EPSILON+")?.0*"
+    #exp = "(0.0)*.(1.1)*"
     #exp = "(a.b)|c*"
     #exp = "(0.1)*"
+    #exp = "a|b"
     #exp = "((a|b)*)*."+EPSILON+".((a|b)|"+EPSILON+")*"
     #exp = "((a|b)*.((a|(b.b))*."+EPSILON+"))"
     #exp = "(((a.a)|(b.b)).a).(a|b)"
@@ -122,11 +128,13 @@ if __name__ == "__main__":
     #     print(state.id)
     #     for t in state.transitions:
     #         print("with: ",t.symbol ," to: ", t.to)
-    graph.graph(auto)
+    graph.graph(auto, "nfa")
     print("////////////////////////\nEvaluacion nfa")
     print(eval.is_in_language(auto, "aab"))
     print("////////////////////////\nA dfa")
-    dfa.to_dfa(auto, exp)
+    auto_dfa = dfa.to_dfa(auto, exp)
+    graph.graph(auto_dfa, "dfa_set")
+    print(eval.is_in_language(auto_dfa, "0011"))
 
 
     

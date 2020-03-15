@@ -10,8 +10,9 @@ class Automata:
         self.states = []
 
 class State:
-    def __init__(self, num):
+    def __init__(self, num, num2):
         self.id = num
+        self.id2 = num2
         self.transitions = []
         self.accept = False
         #self.transitions.append(Transition(EPSILON, self.id))

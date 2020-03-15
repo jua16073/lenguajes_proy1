@@ -6,6 +6,7 @@ EPSILON = "ε"
 def is_in_language(automata, expresion):
     actual = [0]
     actual = cerradura(automata, actual)
+    print("actual 1:", actual)
     i = 0
     while True:
         temp = []
@@ -35,3 +36,10 @@ def cerradura(automata, actual):
             if transition.symbol == EPSILON and transition.to not in actual:
                 actual.append(transition.to)
     return actual
+
+
+def select(automata, id):
+    for state in automata.states:
+        if state.id == id:
+            return state
+    return False

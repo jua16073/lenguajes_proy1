@@ -2,15 +2,15 @@
 from graphviz import Digraph
 
 
-def graph(automata):
+def graph(automata, nombre):
     dot = Digraph(name = "Automata")
     dot.attr(rankdir = "LR")
     for state in automata.states:
         if state.accept:
-            dot.node(str(state.id), str(state.id), shape = "doublecircle")
+            dot.node(str(state.id2), str(state.id2), shape = "doublecircle")
         else:
-            dot.node(str(state.id), str(state.id))
+            dot.node(str(state.id2), str(state.id2))
         for transition in state.transitions:
-            dot.edge(str(state.id),str(transition.to), transition.symbol)
+            dot.edge(str(state.id2),str(transition.to), transition.symbol)
     print(dot.source)
-    dot.render('test-output/automata.gv', view=False)
+    dot.render('test-output/' + nombre + '.gv', view=False)

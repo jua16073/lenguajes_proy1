@@ -44,7 +44,7 @@ def concatenation(tree, automata):
 def option(tree, automata):
     symbol = tree.data
 
-    start = nfa.State(len(automata.states))
+    start = nfa.State(len(automata.states), len(automata.states))
     automata.states.append(start)
 
     if tree.left.data in OPERATORS:
@@ -57,7 +57,7 @@ def option(tree, automata):
     else:
         st2, fn2 = single(tree.right, automata)
     
-    end = nfa.State(len(automata.states))
+    end = nfa.State(len(automata.states), len(automata.states))
     automata.states.append(end)
 
     start.transitions.append(nfa.Transition(EPSILON, st1.id))
@@ -71,7 +71,7 @@ def option(tree, automata):
 def kleene(tree, automata):
     symbol = tree.data
 
-    start = nfa.State(len(automata.states))
+    start = nfa.State(len(automata.states), len(automata.states))
     automata.states.append(start)
 
     if tree.left.data in OPERATORS:
@@ -79,7 +79,7 @@ def kleene(tree, automata):
     else:
         st1, fn1 = single(tree.left, automata)
     
-    end = nfa.State(len(automata.states))
+    end = nfa.State(len(automata.states), len(automata.states))
     automata.states.append(end)
 
     start.transitions.append(nfa.Transition(EPSILON, st1.id))
@@ -129,9 +129,9 @@ def question(tree, automata):
 # Regresa los 2 estados creados, cada uno con sus transiciones
 def single(tree, automata):
     symbol = tree.data
-    first = nfa.State(len(automata.states))
+    first = nfa.State(len(automata.states), len(automata.states))
     automata.states.append(first)
-    second = nfa.State(len(automata.states))
+    second = nfa.State(len(automata.states), len(automata.states))
     automata.states.append(second)
     first.transitions.append(nfa.Transition(symbol, second.id))
     return first, second
