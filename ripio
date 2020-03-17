@@ -6,3 +6,18 @@ state = nfa.State(0)
         if symbols[i] in OPERATORS:
             print(symbols[i])
         i += 1
+
+# def fill_tree(tree, new_tree, num):
+#     if tree.data in OPERATORS:
+#         new_tree.data = [0,tree.data,0]
+#     else:
+#         new_tree.data = num, tree.data, 0
+#         num += 1
+#     if tree.left != None:
+#         pass
+#     if tree.right != None:
+#         pass
+#     #new_tree.data = [first_pos(tree), tree.data, last_pos(tree)]
+#     #first_pos(tree)
+#     #last_pos(tree)
+#     pass

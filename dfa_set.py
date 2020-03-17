@@ -1,6 +1,7 @@
 # archivo para pasar de un nfa a un dfa
 import evaluate as eval
 import nfa
+import collections
 
 OPERATORS = ['|', '*', '+', '?', '.', ')', '(']
 EPSILON = "ε"
@@ -55,7 +56,7 @@ def to_dfa(automata, regex):
 
 def check(nfa, new_state):
     for state in nfa.states:
-        if state.id == new_state:
+        if collections.Counter(state.id) == collections.Counter(new_state):
             return False
     return True
 

@@ -4,6 +4,7 @@ import nfa as automata
 import trees
 import dfa_set as dfa
 import evaluate as eval
+import collections
 
 OPERATORS = ['|', '*', '+', '?', '.', ')', '(']
 EPSILON = "ε"
@@ -17,28 +18,15 @@ def directo(tree, exp):
     new_tree.left = tree
     # Estados importantes
     importantes = estados_importantes(new_tree)
-    for i in importantes:
-        print(i.data)
-    first = first_pos(new_tree)
     # FirstPos
-    print("firstpos")
-    for i in first:
-        print(i.data)
+    first = first_pos(new_tree)
     #Lastpos
-    print("lastpos")
     last = last_pos(new_tree)
-    for i in last:
-        print(i.data)
     # Followpos
     table = {}
     for pos in importantes:
         table[pos] = []
     followpos(new_tree, table)
-
-    for x in table:
-        print(x, ": ", x.data)
-        for y in table[x]:
-            print("     ",y, " ", y.data)
 
     inicial = first_pos(tree)
     auto_direct = create(inicial, table, exp)
@@ -53,8 +41,6 @@ def create(inicial, table, exp):
         if symbol not in OPERATORS and symbol not in symbols and symbol != EPSILON:
             symbols.append(symbol)
     
-    print(symbols)
-    
     for state in auto_direct.states:
         for symbol in symbols:
             temp = []
@@ -62,21 +48,21 @@ def create(inicial, table, exp):
                 if pos.data == symbol:
                     tos = table[pos]
                     for t in tos:
-                        temp.append(t)
-                if dfa.check(auto_direct, temp) and temp != []:
-                    new_state = automata.State(temp, len(auto_direct.states))
-                    auto_direct.states.append(new_state)
-                    state.transitions.append(automata.Transition(symbol, auto_direct.states[-1].id2))
-                elif temp != []:
-                    selected = eval.select(auto_direct, temp)
-                    if selected:
-                        state.transitions.append(automata.Transition(symbol, selected.id2))
-                    else:
-                        print("No existe nodo con ", temp, " de id")
+                        if t not in temp:
+                            temp.append(t)
+            if dfa.check(auto_direct, temp) and temp != []:
+                new_state = automata.State(temp, len(auto_direct.states))
+                auto_direct.states.append(new_state)
+                state.transitions.append(automata.Transition(symbol, auto_direct.states[-1].id2))
+            elif temp != []:
+                selected = eval.select(auto_direct, temp)
+                if selected:
+                    state.transitions.append(automata.Transition(symbol, selected.id2))
+                else:
+                    print("No existe nodo con ", temp, " de id")
     
     return auto_direct
 
-                
 
 
 
@@ -178,7 +164,6 @@ def last_pos(tree):
 
 def followpos(tree, table):
     if tree.data == ".":
-        print(".")
         temp1 = last_pos(tree.left)
         temp2 = first_pos(tree.right)
         for i in temp1:

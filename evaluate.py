@@ -1,6 +1,8 @@
 # Archivo para evaluar una expresion
 # En un automata
 
+import collections
+
 EPSILON = "ε"
 
 def is_in_language(automata, expresion):
@@ -40,6 +42,6 @@ def cerradura(automata, actual):
 
 def select(automata, id):
     for state in automata.states:
-        if state.id == id:
+        if collections.Counter(state.id) == collections.Counter(id):
             return state
     return False

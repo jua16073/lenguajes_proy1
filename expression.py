@@ -24,9 +24,9 @@ if __name__ == "__main__":
         # cad = input()
     else:
         #exp = "a.(a.b)+"
-        #exp = "(a|b)+"
+        exp = "(a|b)+"
         #exp = "b*.a.b"
-        #exp = "(a*|b*).c"
+        exp = "(a*|b*).c"
         #exp = "(a|"+EPSILON+").b.(a+).c?"
         #exp = "0.(0|1)*.0"
         #exp = "0?.(1|"+EPSILON+")?.0*"
@@ -37,8 +37,8 @@ if __name__ == "__main__":
         #exp = "((a|b)*)*."+EPSILON+".((a|b)|"+EPSILON+")*"
         #exp = "((a|b)*.((a|(b.b))*."+EPSILON+"))"
         #exp = "(((a.a)|(b.b)).a).(a|b)"
-        #exp = "(b|b)*.a.b.b.(a|b)*"
-        exp = "(a|b)*.a.b.b"
+        exp = "(b|b)*.a.b.b.(a|b)*"
+        #exp = "(a|b)*.a.b.b"
     ans = trees.evaluate(exp)
     auto = nfa.create_automata(ans, exp)
     # for state in auto.states:
