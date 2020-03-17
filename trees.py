@@ -1,5 +1,7 @@
 #Para hacer trees
 
+OPERATORS = ['|', '*', '+', '?', '.', ')', '(']
+UNITARY = ['*', '+', '?']
 class Tree(object):
     def __init__(self):
         self.left = None
@@ -39,3 +41,80 @@ def print2D(root) :
     # space=[0] 
     # Pass initial space count as 0  
     print2DUtil(root, 0)
+
+# Recorrer la regex
+def evaluate(exp):
+    print(exp)
+
+    values = []
+    ops = []
+    
+    i = 0
+
+    while i < len(exp):
+
+        if exp[i] == ' ':
+            i += 1
+            continue
+
+        elif exp[i] == "(":
+            ops.append(exp[i])
+        
+        elif exp[i] not in OPERATORS:
+            val = ""
+
+            while (i < len(exp)) and exp[i] not in OPERATORS:
+                val = str(val) + exp[i]
+                i -= -1
+            tree = Tree()
+            tree.data = val
+            values.append(tree)
+            i -= 1
+
+        elif exp[i] == ")":
+            while len(ops) != 0 and ops[-1] != "(":
+                val2 = values.pop()
+                val1 = values.pop()
+                op = ops.pop()
+                tree = Tree()
+                tree.data = op
+                tree.left = val1
+                tree.right = val2
+                values.append(tree)
+            ops.pop()
+        
+        else:
+            if (exp[i] in UNITARY):
+                op = exp[i]
+                val = values.pop()
+                tree = Tree()
+                tree.data = op
+                tree.left = val
+                tree.right = None
+                values.append(tree)
+            else:
+                while (len(ops) != 0  and ops[-1] != '('):
+                    op = ops.pop()
+                    val2 = values.pop()
+                    val1 = values.pop()
+                    tree = Tree()
+                    tree.data = op
+                    tree.left = val1
+                    tree.right = val2
+                    values.append(tree)
+                ops.append(exp[i])
+        
+        i -= -1
+    
+    while(len(ops) != 0):
+        val2 = values.pop()
+        val1 = values.pop()
+        op = ops.pop()
+        tree = Tree()
+        tree.data = op
+        tree.left = val1
+        tree.right = val2
+        values.append(tree)
+        if (len(values) == 1):
+            return values[-1]
+    return values[-1]

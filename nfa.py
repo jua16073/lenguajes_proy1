@@ -1,5 +1,6 @@
 # Generacion de NFA
 import trees
+import individuales
 
 OPERATORS = ['|', '*', '+', '?', '.', ')', '(']
 EPSILON = "ε"
@@ -23,6 +24,13 @@ class Transition:
         self.symbol = sym
         self.to = to
 
+def create_automata(tree, og):
+    auto = Automata(og)
+    trees.print2DUtil(tree, 5)
+    symbols = post_order(tree)
+    start , finish = individuales.t_handler(tree, auto)
+    finish.accept = True
+    return auto
 
 def post_order(tree):
     symbols = []

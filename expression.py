@@ -4,102 +4,15 @@ import individuales as m
 import evaluate as eval
 import sys
 import graph
+import directo
 import dfa_set as dfa
 
 OPERATORS = ['|', '*', '+', '?', '.', ')', '(']
-UNITARY = ['*', '+', '?']
 EPSILON = "ε"
 
 # r* = r+ | e
 # r? = r | e
 # r+ = r*r
-
-# Recorrer la regex
-def evaluate(exp):
-    print(exp)
-
-    values = []
-    ops = []
-    
-    i = 0
-
-    while i < len(exp):
-
-        if exp[i] == ' ':
-            i += 1
-            continue
-
-        elif exp[i] == "(":
-            ops.append(exp[i])
-        
-        elif exp[i] not in OPERATORS:
-            val = ""
-
-            while (i < len(exp)) and exp[i] not in OPERATORS:
-                val = str(val) + exp[i]
-                i -= -1
-            tree = trees.Tree()
-            tree.data = val
-            values.append(tree)
-            i -= 1
-
-        elif exp[i] == ")":
-            while len(ops) != 0 and ops[-1] != "(":
-                val2 = values.pop()
-                val1 = values.pop()
-                op = ops.pop()
-                tree = trees.Tree()
-                tree.data = op
-                tree.left = val1
-                tree.right = val2
-                values.append(tree)
-            ops.pop()
-        
-        else:
-            if (exp[i] in UNITARY):
-                op = exp[i]
-                val = values.pop()
-                tree = trees.Tree()
-                tree.data = op
-                tree.left = val
-                tree.right = None
-                values.append(tree)
-            else:
-                while (len(ops) != 0  and ops[-1] != '('):
-                    op = ops.pop()
-                    val2 = values.pop()
-                    val1 = values.pop()
-                    tree = trees.Tree()
-                    tree.data = op
-                    tree.left = val1
-                    tree.right = val2
-                    values.append(tree)
-                ops.append(exp[i])
-        
-        i -= -1
-    
-    while(len(ops) != 0):
-        val2 = values.pop()
-        val1 = values.pop()
-        op = ops.pop()
-        tree = trees.Tree()
-        tree.data = op
-        tree.left = val1
-        tree.right = val2
-        values.append(tree)
-        if (len(values) == 1):
-            return values[-1]
-    return values[-1]
-
-def create_automata(tree, og):
-    auto = nfa.Automata(og)
-    trees.print2DUtil(tree, 5)
-    symbols = nfa.post_order(tree)
-    start , finish = m.t_handler(tree, auto)
-    finish.accept = True
-    return auto
-    
-
 
 if __name__ == "__main__":
     print("1. ya hecha\n2. ingresar")
@@ -114,7 +27,7 @@ if __name__ == "__main__":
         #exp = "(a|b)+"
         #exp = "b*.a.b"
         #exp = "(a*|b*).c"
-        exp = "(a|"+EPSILON+").b.(a+).c?"
+        #exp = "(a|"+EPSILON+").b.(a+).c?"
         #exp = "0.(0|1)*.0"
         #exp = "0?.(1|"+EPSILON+")?.0*"
         #exp = "(0.0)*.(1.1)*"
@@ -125,8 +38,9 @@ if __name__ == "__main__":
         #exp = "((a|b)*.((a|(b.b))*."+EPSILON+"))"
         #exp = "(((a.a)|(b.b)).a).(a|b)"
         #exp = "(b|b)*.a.b.b.(a|b)*"
-    ans = evaluate(exp)
-    auto = create_automata(ans, exp)
+        exp = "(a|b)*.a.b.b"
+    ans = trees.evaluate(exp)
+    auto = nfa.create_automata(ans, exp)
     # for state in auto.states:
     #     print(state.id)
     #     for t in state.transitions:
@@ -138,7 +52,10 @@ if __name__ == "__main__":
     auto_dfa = dfa.to_dfa(auto, exp)
     graph.graph(auto_dfa, "dfa_set")
     print("////////////////////////\nEvaluacion dfa")
-    print(eval.is_in_language(auto_dfa, "bac"))
+    print(eval.is_in_language(auto_dfa, "c"))
+    print("////////////////////////\nDirecto")
+    auto_direct = directo.directo(ans, exp)
+    graph.graph(auto_direct, "dfa_direct")
 
 
     
