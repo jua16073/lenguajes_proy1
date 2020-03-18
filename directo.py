@@ -9,6 +9,7 @@ import collections
 OPERATORS = ['|', '*', '+', '?', '.', ')', '(']
 EPSILON = "ε"
 
+# Preparacion para crear un automata directo de un arbol sintactico
 def directo(tree, exp):
     new_tree = trees.Tree()
     new_tree.data = "."
@@ -18,6 +19,9 @@ def directo(tree, exp):
     new_tree.left = tree
 
     # Estados importantes
+    # Se crea un diccionario "table"
+    # key = estado importante
+    # value = sus follow_pos (llenado en follow_pos())
     importantes = estados_importantes(new_tree)
     # FirstPos
     first = first_pos(new_tree)
@@ -34,6 +38,7 @@ def directo(tree, exp):
     auto_direct = create(inicial, final, table, exp)
     return auto_direct
 
+# creacion de un automata directo
 def create(inicial, final, table, exp):
     auto_direct = automata.Automata(exp)
     first = automata.State(inicial, len(auto_direct.states))
@@ -68,20 +73,22 @@ def create(inicial, final, table, exp):
                     print("No existe nodo con ", temp, " de id")
     return auto_direct
 
-def estados_importantes(tree, num = 0):
+# Selccion de hojas diferentes de epsilon de un arbol sintactico
+def estados_importantes(tree):
     nodes = []
     if tree.data not in OPERATORS and tree.data != EPSILON and tree.left == None and tree.right == None:
         nodes.append(tree)
     if tree.left != None:
-        resp = estados_importantes(tree.left, num)
+        resp = estados_importantes(tree.left)
         for i in resp:
             nodes.append(i)
     if tree.right != None:
-        resp = estados_importantes(tree.right, num)
+        resp = estados_importantes(tree.right)
         for i in resp:
             nodes.append(i)
     return nodes
 
+# Chequear si la raiz en nullable
 def nullable(tree):
     if tree.data == EPSILON:
         return True
@@ -104,6 +111,7 @@ def nullable(tree):
         return True
     return False
 
+# Obtencion de la primera posicion de la raiz del arbol
 def first_pos(tree):
     pos = []
     if tree.data in OPERATORS:
@@ -138,6 +146,7 @@ def first_pos(tree):
         pos.append(tree)
     return pos
 
+# Obtencion de la primera posicion de la raiz del arbol
 def last_pos(tree):
     pos = []
     if tree.data in OPERATORS:
@@ -172,6 +181,8 @@ def last_pos(tree):
         pos.append(tree)
     return pos
 
+# Llenado del diccionario con las siguientes posiciones
+#  de cada estado importante
 def followpos(tree, table):
     if tree.data == ".":
         temp1 = last_pos(tree.left)

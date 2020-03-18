@@ -13,6 +13,7 @@ class Tree(object):
 
 COUNT = [10]
 
+# Funciones de impresion de arboles de Rodrigo Alvarado
 def print2DUtil(root, space) : 
   
     # Base case  
@@ -42,6 +43,8 @@ def print2D(root) :
     # Pass initial space count as 0  
     print2DUtil(root, 0)
 
+# Código basado en el código de Rituraj Jain
+# para el evaluador de expresiones de GeeksforGeeks
 # Recorrer la regex
 def evaluate(exp):
     print(exp)

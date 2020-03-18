@@ -6,6 +6,7 @@ import collections
 OPERATORS = ['|', '*', '+', '?', '.', ')', '(']
 EPSILON = "ε"
 
+# funcion para crear un dfa desde un nfa
 def to_dfa(automata, regex):
     dfa = nfa.Automata(automata.id)
     print(dfa.id)
@@ -50,12 +51,14 @@ def to_dfa(automata, regex):
 
     return dfa
 
-def check(nfa, new_state):
-    for state in nfa.states:
+# chequear si un nodo ya existe
+def check(dfa, new_state):
+    for state in dfa.states:
         if collections.Counter(state.id) == collections.Counter(new_state):
             return False
     return True
 
+# chequear si este nodo es de aceptacion
 def check_aceptacion(nfa, new_state):
     for num in new_state:
         if nfa.states[num].accept:

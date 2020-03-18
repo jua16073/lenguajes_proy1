@@ -1,7 +1,9 @@
 # Para graficar 
 from graphviz import Digraph
 
-
+# Graficar un automata
+# Teniendo nodo por estado de automata
+# edge por transicion
 def graph(automata, nombre):
     dot = Digraph(name = "Automata")
     dot.attr(rankdir = "LR")

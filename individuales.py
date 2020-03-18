@@ -6,6 +6,7 @@ OPERATORS = ['|', '*', '+', '?', '.', ')', '(']
 
 EPSILON = "ε"
 
+# manejo del arbol para mandar a la funcion correcta de la raiz del arbol
 def t_handler(tree, automata):
     start = 0
     finish = 0
@@ -24,6 +25,7 @@ def t_handler(tree, automata):
         start, finish = single(tree, automata)
     return start, finish
 
+# Crear los estados de un automata de concatenacion y transiciones 
 def concatenation(tree, automata):
     symbol = tree.data
     
@@ -41,6 +43,7 @@ def concatenation(tree, automata):
 
     return st1, fn2
 
+# Crear nodos y transiciones de un automata or
 def option(tree, automata):
     symbol = tree.data
 
@@ -68,6 +71,7 @@ def option(tree, automata):
     return start, end
 
 # r* = r+ | e
+# Crear nodos y transiciones de un automata kleene
 def kleene(tree, automata):
     symbol = tree.data
 
@@ -91,6 +95,7 @@ def kleene(tree, automata):
 
 # r+ = r*r
 # r+ = rr*
+# Crear nodos y transiciones de un automata plus
 def plus(tree, automata):
     symbol = tree.data
 
@@ -110,6 +115,7 @@ def plus(tree, automata):
     return st1, fn2
 
 # r? = r | e
+# Crear nodos y transiciones de un automata ?
 def question(tree, automata):
 
     temp = trees.Tree()

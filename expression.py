@@ -39,7 +39,10 @@ if __name__ == "__main__":
         #exp = "(a|b)*.a.b.b"
         #exp = "(a|b)+"
         exp = "b*"
+    # Creacion de arbol
     ans = trees.evaluate(exp)
+
+    # Creacion de automatas
     auto = nfa.create_automata(ans, exp)
     graph.graph(auto, "nfa")
     print("////////////////////////\nA dfa")
@@ -49,6 +52,7 @@ if __name__ == "__main__":
     auto_direct = directo.directo(ans, exp)
     graph.graph(auto_direct, "dfa_direct")
 
+    # Evaluacion de cadena de caracteres
     while True:
         print("Ingrese expresion a probar")
         prueba = input()

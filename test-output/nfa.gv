@@ -1,12 +1,10 @@
 digraph Automata {
 	rankdir=LR
 	0 [label=0]
-	0 -> 1 [label="ε"]
-	0 -> 3 [label="ε"]
+	0 -> 1 [label=ab]
 	1 [label=1]
-	1 -> 2 [label=b]
+	1 -> 2 [label="ε"]
 	2 [label=2]
-	2 -> 1 [label="ε"]
-	2 -> 3 [label="ε"]
+	2 -> 3 [label=c]
 	3 [label=3 shape=doublecircle]
 }

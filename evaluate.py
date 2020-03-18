@@ -5,6 +5,8 @@ import collections
 
 EPSILON = "ε"
 
+# Chequear si la cadena de caracteres esta en el 
+# lenguaje desrito por el automata
 def is_in_language(automata, expresion):
     if expresion == " ":
         expresion = EPSILON
@@ -31,7 +33,7 @@ def is_in_language(automata, expresion):
             return True
     return False
     
-
+# Funcion de cerradura epsilon
 def cerradura(automata, actual):
     for num in actual:
         for transition in automata.states[num].transitions:
@@ -39,7 +41,7 @@ def cerradura(automata, actual):
                 actual.append(transition.to)
     return actual
 
-
+# seleccion de un nodo de arbol basado en un id
 def select(automata, id):
     for state in automata.states:
         if collections.Counter(state.id) == collections.Counter(id):
