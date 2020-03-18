@@ -13,4 +13,4 @@ def graph(automata, nombre):
         for transition in state.transitions:
             dot.edge(str(state.id2),str(transition.to), transition.symbol)
     print(dot.source)
-    dot.render('test-output/' + nombre + '.gv', view=False)
+    dot.render('test-output/' + nombre + '.gv', view=True)

@@ -125,11 +125,15 @@ def first_pos(tree):
             if nullable(tree.left):
                 temp2 = first_pos(tree.right)
                 for num in temp2:
-                    pos.append(num)       
-        # else:
-        #     temp = first_pos(tree.left)
-        #     for num in temp:
-        #         pos.append(num)
+                    pos.append(num)
+        elif tree.data == "+":
+            temp1 = first_pos(tree.left)
+            for num in temp1:
+                pos.append(num)
+        elif tree.data == "?":
+            temp1 = first_pos(tree.left)
+            for num in temp1:
+                pos.append(num)
     elif tree.data != EPSILON:
         pos.append(tree)
     return pos
@@ -156,10 +160,14 @@ def last_pos(tree):
                     pos.append(num)
             for num in temp1:
                 pos.append(num)
-        # else:
-        #     temp = last_pos(tree.left)
-        #     for num in temp:
-        #         pos.append(num)
+        elif tree.data == "+":
+            temp1 = last_pos(tree.left)
+            for num in temp1:
+                pos.append(num)
+        elif tree.data == "?":
+            temp1 = last_pos(tree.left)
+            for num in temp1:
+                pos.append(num)
     elif tree.data != EPSILON:
         pos.append(tree)
     return pos

@@ -18,7 +18,10 @@ def to_dfa(automata, regex):
             symbols.append(symbol)
 
     # Metodo de conjuntos
-    dfa.states.append(nfa.State(eval.cerradura(automata, actual), len(dfa.states)))
+    new_state = nfa.State(eval.cerradura(automata, actual), len(dfa.states))
+    dfa.states.append(new_state)
+    if check_aceptacion(automata, new_state.id):
+        new_state.accept = True
     for state in dfa.states:
         # Busqueda de los movimientos con los simbolos del lenguaje
         for symbol in symbols:
@@ -46,13 +49,6 @@ def to_dfa(automata, regex):
                     print("No existe nodo con ", c_epsilon, " de id")
 
     return dfa
-    
-    # print("///////////")
-    # for state in dfa.states:
-    #     for transition in state.transitions:
-    #         print("de ", state.id, " a ", transition.to, " con ", transition.symbol)
-
-            
 
 def check(nfa, new_state):
     for state in nfa.states:

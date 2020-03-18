@@ -20,8 +20,6 @@ if __name__ == "__main__":
     if opcion == "2":
         print("ingrese expression regular: \n")
         exp = input()
-        # print("ingrese cadena")
-        # cad = input()
     else:
         #exp = "a.(a.b)+"
         #exp = "(a|b)+"
@@ -36,10 +34,11 @@ if __name__ == "__main__":
         #exp = "a|b"
         #exp = "((a|b)*)*."+EPSILON+".((a|b)|"+EPSILON+")*"
         #exp = "((a|b)*.((a|(b.b))*."+EPSILON+"))"
-        exp = "(((a.a)|(b.b)).a).(a|b)"
+        #exp = "(((a.a)|(b.b)).a).(a|b)"
         #exp = "(b|b)*.a.b.b.(a|b)*"
         #exp = "(a|b)*.a.b.b"
         #exp = "(a|b)+"
+        exp = "b*"
     ans = trees.evaluate(exp)
     auto = nfa.create_automata(ans, exp)
     graph.graph(auto, "nfa")
@@ -50,14 +49,20 @@ if __name__ == "__main__":
     auto_direct = directo.directo(ans, exp)
     graph.graph(auto_direct, "dfa_direct")
 
-    print("Ingrese expresion a probar")
-    prueba = input()
+    while True:
+        print("Ingrese expresion a probar")
+        prueba = input()
 
-    print("////////////////////////\nEvaluacion nfa")
-    print(eval.is_in_language(auto, prueba))
-    print("////////////////////////\nEvaluacion dfa")
-    print(eval.is_in_language(auto_dfa, prueba))
-    print("////////////////////////\nEvaluacion Directo")
-    print(eval.is_in_language(auto_direct, prueba))
+        print("Evaluacion nfa")
+        print(eval.is_in_language(auto, prueba))
+        print("////////////////////////\nEvaluacion dfa")
+        print(eval.is_in_language(auto_dfa, prueba))
+        print("////////////////////////\nEvaluacion Directo")
+        print(eval.is_in_language(auto_direct, prueba))
+
+        print("evaluar otra? \n s/n")
+        prueba = input()
+        if prueba  == "n":
+            break
 
     

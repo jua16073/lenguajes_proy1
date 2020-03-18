@@ -6,6 +6,8 @@ import collections
 EPSILON = "ε"
 
 def is_in_language(automata, expresion):
+    if expresion == " ":
+        expresion = EPSILON
     actual = [0]
     actual = cerradura(automata, actual)
     i = 0
@@ -19,9 +21,8 @@ def is_in_language(automata, expresion):
                     temp.append(transition.to)
         i += 1
         temp = cerradura(automata, temp)
-        # if not temp:
-        #     break
-        # else:
+        if not temp and expresion == EPSILON:
+            break
         actual = temp.copy()
         if i > len(expresion)-1:
             break
