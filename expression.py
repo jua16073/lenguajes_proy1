@@ -45,12 +45,15 @@ if __name__ == "__main__":
     # Creacion de automatas
     auto = nfa.create_automata(ans, exp)
     graph.graph(auto, "nfa")
+    graph.to_txt(auto, "nfa")
     print("////////////////////////\nA dfa")
     auto_dfa = dfa.to_dfa(auto, exp)
     graph.graph(auto_dfa, "dfa_set")
+    graph.to_txt(auto, "dfa_set")
     print("////////////////////////\nDirecto")
     auto_direct = directo.directo(ans, exp)
     graph.graph(auto_direct, "dfa_direct")
+    graph.to_txt(auto, "dfa_direct")
 
     # Evaluacion de cadena de caracteres
     while True:
