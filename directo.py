@@ -16,6 +16,7 @@ def directo(tree, exp):
     right_t.data = "#"
     new_tree.right = right_t
     new_tree.left = tree
+
     # Estados importantes
     importantes = estados_importantes(new_tree)
     # FirstPos
@@ -28,14 +29,17 @@ def directo(tree, exp):
         table[pos] = []
     followpos(new_tree, table)
 
-    inicial = first_pos(tree)
-    auto_direct = create(inicial, table, exp)
+    inicial = first_pos(new_tree)
+    final = last_pos(new_tree)
+    auto_direct = create(inicial, final, table, exp)
     return auto_direct
 
-def create(inicial, table, exp):
+def create(inicial, final, table, exp):
     auto_direct = automata.Automata(exp)
     first = automata.State(inicial, len(auto_direct.states))
     auto_direct.states.append(first)
+    if final[-1] in first.id:
+        first.accept = True
     symbols = []
     for symbol in exp:
         if symbol not in OPERATORS and symbol not in symbols and symbol != EPSILON:
@@ -52,6 +56,8 @@ def create(inicial, table, exp):
                             temp.append(t)
             if dfa.check(auto_direct, temp) and temp != []:
                 new_state = automata.State(temp, len(auto_direct.states))
+                if final[-1] in temp:
+                    new_state.accept = True
                 auto_direct.states.append(new_state)
                 state.transitions.append(automata.Transition(symbol, auto_direct.states[-1].id2))
             elif temp != []:
@@ -60,12 +66,7 @@ def create(inicial, table, exp):
                     state.transitions.append(automata.Transition(symbol, selected.id2))
                 else:
                     print("No existe nodo con ", temp, " de id")
-    
     return auto_direct
-
-
-
-
 
 def estados_importantes(tree, num = 0):
     nodes = []
@@ -84,6 +85,9 @@ def estados_importantes(tree, num = 0):
 def nullable(tree):
     if tree.data == EPSILON:
         return True
+    elif tree.data == ".":
+        if nullable(tree.left) and nullable(tree.right):
+            return True
     elif tree.data == "*":
         return True
     elif tree.data == "|":
@@ -97,8 +101,6 @@ def nullable(tree):
         else:
             return False
     elif tree.data == "?":
-        return True
-    elif tree.data == EPSILON:
         return True
     return False
 
@@ -123,11 +125,11 @@ def first_pos(tree):
             if nullable(tree.left):
                 temp2 = first_pos(tree.right)
                 for num in temp2:
-                    pos.append(num)
-        else:
-            temp = first_pos(tree.left)
-            for num in temp:
-                pos.append(num)
+                    pos.append(num)       
+        # else:
+        #     temp = first_pos(tree.left)
+        #     for num in temp:
+        #         pos.append(num)
     elif tree.data != EPSILON:
         pos.append(tree)
     return pos
@@ -154,10 +156,10 @@ def last_pos(tree):
                     pos.append(num)
             for num in temp1:
                 pos.append(num)
-        else:
-            temp = last_pos(tree.left)
-            for num in temp:
-                pos.append(num)
+        # else:
+        #     temp = last_pos(tree.left)
+        #     for num in temp:
+        #         pos.append(num)
     elif tree.data != EPSILON:
         pos.append(tree)
     return pos
@@ -175,6 +177,13 @@ def followpos(tree, table):
         for i in temp1:
             for num in temp2:
                 table[i].append(num)
+    elif tree.data == "+":
+        temp1 = last_pos(tree.left)
+        temp2 = first_pos(tree.left)
+        for i in temp1:
+            for num in temp2:
+                table[i].append(num)
+
     if tree.left != None:
         followpos(tree.left, table)
     if tree.right != None:

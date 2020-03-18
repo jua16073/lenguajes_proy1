@@ -8,12 +8,11 @@ EPSILON = "ε"
 def is_in_language(automata, expresion):
     actual = [0]
     actual = cerradura(automata, actual)
-    print("actual 1:", actual)
     i = 0
     while True:
         temp = []
-        print("simbolo: ",expresion[i])
-        print("Estados a chequear: ",actual)
+        #print("simbolo: ",expresion[i])
+        #print("Estados a chequear: ",actual)
         for num in actual:
             for transition in automata.states[num].transitions:
                 if transition.symbol == expresion[i] and transition.to not in temp:

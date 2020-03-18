@@ -24,9 +24,9 @@ if __name__ == "__main__":
         # cad = input()
     else:
         #exp = "a.(a.b)+"
-        exp = "(a|b)+"
+        #exp = "(a|b)+"
         #exp = "b*.a.b"
-        exp = "(a*|b*).c"
+        #exp = "(a*|b*).c"
         #exp = "(a|"+EPSILON+").b.(a+).c?"
         #exp = "0.(0|1)*.0"
         #exp = "0?.(1|"+EPSILON+")?.0*"
@@ -36,26 +36,28 @@ if __name__ == "__main__":
         #exp = "a|b"
         #exp = "((a|b)*)*."+EPSILON+".((a|b)|"+EPSILON+")*"
         #exp = "((a|b)*.((a|(b.b))*."+EPSILON+"))"
-        #exp = "(((a.a)|(b.b)).a).(a|b)"
-        exp = "(b|b)*.a.b.b.(a|b)*"
+        exp = "(((a.a)|(b.b)).a).(a|b)"
+        #exp = "(b|b)*.a.b.b.(a|b)*"
         #exp = "(a|b)*.a.b.b"
+        #exp = "(a|b)+"
     ans = trees.evaluate(exp)
     auto = nfa.create_automata(ans, exp)
-    # for state in auto.states:
-    #     print(state.id)
-    #     for t in state.transitions:
-    #         print("with: ",t.symbol ," to: ", t.to)
     graph.graph(auto, "nfa")
-    print("////////////////////////\nEvaluacion nfa")
-    print(eval.is_in_language(auto, "bac"))
     print("////////////////////////\nA dfa")
     auto_dfa = dfa.to_dfa(auto, exp)
     graph.graph(auto_dfa, "dfa_set")
-    print("////////////////////////\nEvaluacion dfa")
-    print(eval.is_in_language(auto_dfa, "c"))
     print("////////////////////////\nDirecto")
     auto_direct = directo.directo(ans, exp)
     graph.graph(auto_direct, "dfa_direct")
 
+    print("Ingrese expresion a probar")
+    prueba = input()
+
+    print("////////////////////////\nEvaluacion nfa")
+    print(eval.is_in_language(auto, prueba))
+    print("////////////////////////\nEvaluacion dfa")
+    print(eval.is_in_language(auto_dfa, prueba))
+    print("////////////////////////\nEvaluacion Directo")
+    print(eval.is_in_language(auto_direct, prueba))
 
     
