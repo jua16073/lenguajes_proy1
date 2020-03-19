@@ -6,6 +6,7 @@ import sys
 import graph
 import directo
 import dfa_set as dfa
+import time
 
 OPERATORS = ['|', '*', '+', '?', '.', ')', '(']
 EPSILON = "ε"
@@ -36,9 +37,9 @@ if __name__ == "__main__":
         #exp = "((a|b)*.((a|(b.b))*."+EPSILON+"))"
         #exp = "(((a.a)|(b.b)).a).(a|b)"
         #exp = "(b|b)*.a.b.b.(a|b)*"
-        #exp = "(a|b)*.a.b.b"
+        exp = "(a|b)*.a.b.b"
         #exp = "(a|b)+"
-        exp = "b*"
+        #exp = "b*"
     # Creacion de arbol
     ans = trees.evaluate(exp)
 
@@ -61,11 +62,20 @@ if __name__ == "__main__":
         prueba = input()
 
         print("Evaluacion nfa")
+        start = time.time()
         print(eval.is_in_language(auto, prueba))
+        end = time.time()
+        print("tiempo ", end-start)
         print("////////////////////////\nEvaluacion dfa")
+        start = time.time()
         print(eval.is_in_language(auto_dfa, prueba))
+        end = time.time()
+        print("tiempo ", end-start)
         print("////////////////////////\nEvaluacion Directo")
+        start = time.time()
         print(eval.is_in_language(auto_direct, prueba))
+        end = time.time()
+        print("tiempo ", end-start)
 
         print("evaluar otra? \n s/n")
         prueba = input()

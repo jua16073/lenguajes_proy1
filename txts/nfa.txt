@@ -1,31 +1,46 @@
-Automata de a.b.c.d.e
-simbolos del lenguaje: a b c d e 
+Automata de (a|b)*.a.b.b
+simbolos del lenguaje: a b 
 
 Inicial Estado: 0
-con: a a: 1
+con: ε a: 1
+con: ε a: 7
 
 Estado: 1
 con: ε a: 2
-
-Estado: 2
-con: b a: 3
-
-Estado: 3
 con: ε a: 4
 
+Estado: 2
+con: a a: 3
+
+Estado: 3
+con: ε a: 6
+
 Estado: 4
-con: c a: 5
+con: b a: 5
 
 Estado: 5
 con: ε a: 6
 
 Estado: 6
-con: d a: 7
+con: ε a: 1
+con: ε a: 7
 
 Estado: 7
 con: ε a: 8
 
 Estado: 8
-con: e a: 9
+con: a a: 9
 
- De AceptacionEstado: 9
+Estado: 9
+con: ε a: 10
+
+Estado: 10
+con: b a: 11
+
+Estado: 11
+con: ε a: 12
+
+Estado: 12
+con: b a: 13
+
+ De AceptacionEstado: 13
